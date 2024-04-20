@@ -1,0 +1,33 @@
+/* body {
+    font-family: Helvetica;
+    margin: 0;
+  } */
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+  .site-header { 
+    width: auto;
+    border-bottom: 1px solid #ccc;
+    padding: .5em 1em;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .site-identity h1 {
+    font-size: 1.5em;
+    margin: .6em 0;
+    display: inline-block;
+  }
+  
+  
+  .site-navigation ul, 
+  .site-navigation li {
+    margin: 0; 
+    padding: 0;
+  }
+  
+  .site-navigation li {
+    display: inline-block;
+    margin: 1.4em 1em 1em 1em;
+  }
