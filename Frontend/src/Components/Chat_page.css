@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.chat-container {
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.request
+{
+    text-align: right;
+}
+    
+
+.chat-form .fas.fa-microphone {
+    font-size: 24px; /* Adjust the size as needed */
+    padding:10px;
+    
+}
+
+
+.chat-messages {
+    padding: 10px;
+    overflow-y: scroll;
+    height: 450px;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.user-message {
+    background-color: #d9f9fb;
+    padding: 5px 10px;
+    border-radius: 10px;
+    float: right;
+}
+
+.bot-message {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    float: left;
+}
+
+.chat-form {
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 100px; /* Increase size */
+    height: 100px; /* Increase size */
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+    display: block; /* Ensure block-level element behavior */
+}
+
+
+.chat-form input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.chat-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.chat-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.img-position{
+    float: auto;
+}
+
+:root {
+    --bg-color: #ffffff; /* Default background color */
+    --text-color: #000000; /* Default text color */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.dark-mode body {
+    background-color: #333333; /* Dark mode background color */
+    color: #ffffff; /* Dark mode text color */
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.toggle-btn i {
+    font-size: 24px;
+}
+
+.message-style {
+    background-color: #9ed262;
+    font-size: 16px;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 10px;
+    width: fit-content;
+    float: right;
+    
+}
