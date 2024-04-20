@@ -49,7 +49,7 @@ export default function Login() {
                                 </div>
                             </div>
                             <div>
-                                <Link to={'/'}>Register</Link>
+                                <Link to={'/register'}>Register</Link>
                             </div>
                             <div className="button">
                                 <input type="submit"></input>

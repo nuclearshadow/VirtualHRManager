@@ -9,9 +9,9 @@ export default function Home() {
     <>
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Register/>}></Route>
+      <Route path="/" element={<Chat_page/>}></Route>
       <Route  path="/login" element={<Login/>} />
-      <Route  path="/chat" element={<Chat_page/>} />
+      <Route  path="/register" element={<Register/>} />
       </Routes>
       </BrowserRouter>
     </>
