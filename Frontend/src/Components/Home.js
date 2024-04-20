@@ -3,6 +3,7 @@ import Register from './Register'
 import Login from './Login'
 import {BrowserRouter, Route, Routes } from 'react-router-dom';
 import Chat_page from './Chat_page';
+import AvatarDisplay from './AvatarDisplay';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Route path="/" element={<Register/>}></Route>
       <Route  path="/login" element={<Login/>} />
       <Route  path="/chat" element={<Chat_page/>} />
+      <Route  path="/avatar" element={<AvatarDisplay/>} />
       </Routes>
       </BrowserRouter>
     </>
