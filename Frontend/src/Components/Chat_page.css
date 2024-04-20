@@ -8,11 +8,11 @@ body {
 
 .chat-container {
     max-width: 1001px;
-    margin: 20px auto;
+    /* margin: 20px auto; */
     /* border: 1px solid #ccc; */
     border-radius: 5px;
     overflow: hidden;
-    padding: 40px;
+    /* padding: 40px; */
 }
 
 .request
@@ -101,6 +101,11 @@ body {
 }
 .img-position{
     margin-right: 20px;
+    height: 90%;
+    border: solid gray 1px;
+    border-radius: 10px;
+    min-width: 300px;
+    overflow: hidden;
 }
 
 :root {

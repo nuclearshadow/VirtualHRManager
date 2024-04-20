@@ -13,7 +13,6 @@ export default function Home() {
       <Route path="/" element={<Chat_page/>}></Route>
       <Route  path="/login" element={<Login/>} />
       <Route  path="/register" element={<Register/>} />
-      <Route  path="/chat" element={<Chat_page/>} />
       <Route  path="/avatar" element={<AvatarDisplay/>} />
       </Routes>
       </BrowserRouter>
