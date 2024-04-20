@@ -33,7 +33,7 @@ body {
     height: 450px;
 }
 
-.message {
+.message, .request {
     margin-bottom: 10px;
 }
 
