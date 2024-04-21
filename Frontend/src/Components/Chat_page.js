@@ -1,8 +1,10 @@
 import '../Components/Chat_page.css';
 import React, { useEffect, useState } from 'react';
 import MicIcon from '@mui/icons-material/Mic';
+import DownloadIcon from '@mui/icons-material/Download';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import AvatarDisplay from './AvatarDisplay';
+import { CSVLink } from 'react-csv';
 
 // const apiUrl = process.env.REACT_APP_API_URL;
 const apiUrl = 'http://localhost:5000';
@@ -34,7 +36,7 @@ function Chat_page() {
         })
             .then(res => res.text())
             .then(text => {
-                setMessages([...messages, { author: 'bot', message: text }])
+                setMessages([...messages, { author: 'HR', message: text }])
                 speak(text);
             });
     }, []);
@@ -70,7 +72,7 @@ function Chat_page() {
             })
                 .then(res => res.text())
                 .then(text => {
-                    setMessages([...messages, userMsg, { author: 'bot', message: text }]);
+                    setMessages([...messages, userMsg, { author: 'HR', message: text }]);
                     speak(text); // Speak the response
                 });
 
@@ -109,11 +111,12 @@ function Chat_page() {
                     <div className="chat-messages" id="chat-messages">
                         <div>
                             {messages.map((msg, index) => <div key={index}>
-                                <div className={msg.author == 'bot' ? "message bot-message" : "request message-style"}>{msg.message}</div>
+                                <div className={msg.author == 'HR' ? "message bot-message" : "request message-style"}>{msg.message}</div>
                             </div>)}
                         </div>
                     </div>
                     <form className="chat-form" id="chat-form" onSubmit={handleSubmit}>
+                        <CSVLink data={messages} filename='HR_Interview' className='button'><DownloadIcon /> CSV</CSVLink>
                         <textarea
                             id="user-input"
                             value={userInput}
@@ -125,15 +128,15 @@ function Chat_page() {
                                 padding: '10px',
                                 width: 'calc(100% - 40px)',
                                 fontSize: '17px',
-                                marginRight: '8px',
                                 pointerEvents: isSpeaking ? 'none' : 'auto', // Disable pointer events when speaking
                                 opacity: isSpeaking ? 0.5 : 1 // Reduce opacity when speaking
                             }}
                         />
-                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking} style={{ background: listening ? 'red' : 'rgb(92 165 223)', color: '#ffffff', border: 'none', cursor: 'pointer', padding: '8px', marginRight: '5px', borderRadius: '30px', pointerEvents: isSpeaking ? 'none' : 'auto' }}>
+                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking} style={{ background: listening ? 'red' : 'rgb(92 165 223)', border: 'none', cursor: 'pointer', marginRight: '5px', borderRadius: '9999px', pointerEvents: isSpeaking ? 'none' : 'auto', aspectRatio: '1 / 1' }}
+                        className='button'>
                             <MicIcon style={{ fontSize: '24px' }} />
                         </button>}
-                        <input type="submit" value="Send" style={{ background: 'rgb(135 217 112);', color: '#ffffff', border: 'none', cursor: 'pointer', padding: '10px', borderRadius: '10px' }} />
+                        <input type="submit" value="Send" className='button' />
                     </form>
                 </div>
             </div>
