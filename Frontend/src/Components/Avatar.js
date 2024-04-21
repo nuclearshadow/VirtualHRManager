@@ -5,8 +5,9 @@ Command: npx gltfjsx@6.2.16 public\models\6623fec98be5a696276d9d37.glb -o src\Co
 
 import React, { useEffect, useRef } from 'react'
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber';
 
-export function Avatar({animation, ...props}) {
+export function Avatar({isTalking, ...props}) {
   const { nodes, materials } = useGLTF('/models/6623fec98be5a696276d9d37.glb');
   const group = useRef();
 
@@ -21,6 +22,30 @@ export function Avatar({animation, ...props}) {
   // useEffect(() => {
   //   actions[animation].reset().fadeIn(0.5).play();
   // }, [animation])
+  let time = 0;
+  const talkingSpeed = 10;
+  
+  useFrame((state, delta) => {
+    if (!isTalking) {
+      nodes.Wolf3D_Head.morphTargetInfluences[
+        nodes.Wolf3D_Head.morphTargetDictionary['viseme_O']
+      ] = 0;
+      nodes.Wolf3D_Teeth.morphTargetInfluences[
+        nodes.Wolf3D_Teeth.morphTargetDictionary['viseme_O']
+      ] = 0;
+      return;
+    }
+    time += delta;
+    nodes.Wolf3D_Head.morphTargetInfluences[
+      nodes.Wolf3D_Head.morphTargetDictionary['viseme_O']
+    ] = (Math.sin(talkingSpeed * time) + 1) / 3;
+    nodes.Wolf3D_Teeth.morphTargetInfluences[
+      nodes.Wolf3D_Teeth.morphTargetDictionary['viseme_O']
+    ] = (Math.sin(talkingSpeed * time) + 1) / 3;
+    // if (time >= 1) {
+    //   time = 0;
+    // }
+  })
   
   return (
     <group {...props} dispose={null} ref={group}>

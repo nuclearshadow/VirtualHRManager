@@ -85,22 +85,20 @@ function Chat_page() {
     };
 
     const handleMicIconClick = () => {
-        if (!isSpeaking) {
-            if (listening) {
-                setMicColor('rgb(92 165 223)');
-                SpeechRecognition.stopListening();
-            } else {
-                setMicColor('red');
-                SpeechRecognition.startListening();
-            }
-            setIsListening(!listening); // Toggle microphone status
+        if (listening) {
+            setMicColor('rgb(92 165 223)');
+            SpeechRecognition.stopListening();
+        } else {
+            setMicColor('red');
+            SpeechRecognition.startListening();
         }
+        setIsListening(!listening); // Toggle microphone status
     };
 
     return (
         <div className="MAIN" style={{marginLeft:'20%',marginRight:'20%'}}>
             <div className="img-position">
-                <AvatarDisplay className="avatar" />
+                <AvatarDisplay isTalking={isSpeaking} className="avatar" />
             </div>
             <div>
                 <button className="toggle-btn" onClick={toggleDarkMode}>
@@ -132,7 +130,7 @@ function Chat_page() {
                                 opacity: isSpeaking ? 0.5 : 1 // Reduce opacity when speaking
                             }}
                         />
-                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} style={{ background: micColor, color: '#ffffff', border: 'none', cursor: 'pointer', padding: '8px', marginRight: '5px', borderRadius: '30px', pointerEvents: isSpeaking ? 'none' : 'auto' }}>
+                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking} style={{ background: listening ? 'red' : 'rgb(92 165 223)', color: '#ffffff', border: 'none', cursor: 'pointer', padding: '8px', marginRight: '5px', borderRadius: '30px', pointerEvents: isSpeaking ? 'none' : 'auto' }}>
                             <MicIcon style={{ fontSize: '24px' }} />
                         </button>}
                         <input type="submit" value="Send" style={{ background: 'rgb(135 217 112);', color: '#ffffff', border: 'none', cursor: 'pointer', padding: '10px', borderRadius: '10px' }} />
