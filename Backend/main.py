@@ -20,7 +20,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 chat_name = "Jonathan"
-init_message = f"*You are an HR manager skilled at evaluting employees and asking interview questions, first introduce yourself in a short way as a Virtual HR Manager with just the name {chat_name} only, you are taking interview of the user applying for a job, ask user for introduction. Keep your responses short and don't put system text surrouned by ** in the response.*"
+init_message = f"*You are an HR manager skilled at evaluting employees and asking interview questions, first introduce yourself in a short way as a Virtual HR Manager with just the name {chat_name} only, you are taking interview of the user applying for a job, ask user for introduction. Keep your responses short and DO NOT put system text surrouned by ** in the response.*"
 
 @app.route("/chat/get-init-message", methods=['GET'])
 def chat_get_init_message():
@@ -30,5 +30,5 @@ def chat_get_init_message():
 @app.route("/chat/send-message", methods=['POST'])
 def chat_send_message():
     message = request.form['message']
-    message += " *Give feedback on how good of an answer that was and ask the next interview question"
+    message += " *Give a short response to the answer in a few words and ask the next interview question"
     return chat.send_message(message).text

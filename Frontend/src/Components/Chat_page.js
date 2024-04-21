@@ -1,5 +1,5 @@
 import '../Components/Chat_page.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MicIcon from '@mui/icons-material/Mic';
 import DownloadIcon from '@mui/icons-material/Download';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
@@ -97,6 +97,12 @@ function Chat_page() {
         setIsListening(!listening); // Toggle microphone status
     };
 
+    const msgRef = useRef();
+
+    useEffect(() => {
+        msgRef.current.lastElementChild?.scrollIntoView({ block: 'start' })
+    }, [messages]);
+
     return (
         <div className="MAIN" style={{marginLeft:'20%',marginRight:'20%'}}>
             <div className="img-position">
@@ -109,8 +115,8 @@ function Chat_page() {
 
                 <div className="chat-container">
                     <div className="chat-messages" id="chat-messages">
-                        <div>
-                            {messages.map((msg, index) => <div key={index}>
+                        <div ref={msgRef}>
+                            {messages.map((msg, index) => <div key={index} className='message-container'>
                                 <div className={msg.author == 'HR' ? "message bot-message" : "request message-style"}>{msg.message}</div>
                             </div>)}
                         </div>

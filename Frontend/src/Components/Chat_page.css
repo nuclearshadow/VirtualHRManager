@@ -15,10 +15,10 @@ body {
     /* padding: 40px; */
 }
 
-.request
+/* .request
 {
-    text-align: right;
-}
+    justify-self: flex-end;
+} */
     
 /* 
 .chat-form .fas.fa-microphone {
@@ -42,13 +42,21 @@ body {
 
 .message, .request {
     margin-bottom: 10px;
+    /* text-wrap: wrap; */
+}
+
+.message-container {
+    display: flex;
+}
+
+.message-container:has(.request) {
+    justify-content: end;
 }
 
 .user-message {
     background-color: #d9f9fb;
     padding: 5px 10px;
     border-radius: 10px;
-    float: right;
     max-width: 70%;
 }
 
@@ -56,7 +64,6 @@ body {
     background-color: #f0f0f0;
     padding: 5px 10px;
     border-radius: 10px;
-    float: left;
 }
 
 .chat-form {
