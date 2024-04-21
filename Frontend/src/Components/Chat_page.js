@@ -8,6 +8,13 @@ import { CSVLink } from 'react-csv';
 
 // const apiUrl = process.env.REACT_APP_API_URL;
 const apiUrl = 'http://localhost:5000';
+// const genaiApiUrl = process.env.REACT_APP_SYNCLABS_API_URL;
+const synclabsApiUrl = 'https://api.synclabs.so';
+
+const defaultVideoUrl = 'https://synchlabs-public.s3.us-west-2.amazonaws.com/david_demo_shortvid-03a10044-7741-4cfc-816a-5bccd392d1ee.mp4';
+
+const defaultVoiceId = 'e5361405-4967-446d-ad63-2f6ed8729c66';
+const synclabsApiKey = '886d5c7f-2bb1-4d34-bfc8-d446f05de29b';
 
 function Chat_page() {
     const [userInput, setUserInput] = useState('');
@@ -16,6 +23,10 @@ function Chat_page() {
     const [isSpeaking, setIsSpeaking] = useState(false); // State to track text-to-speech status
     const [micColor, setMicColor] = useState('rgb(92 165 223)'); // State to track microphone icon color
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition(); // Initialize SpeechRecognition hook
+
+    const [videoUrl, setVideoUrl] = useState(defaultVideoUrl)
+    const [generating, setGenerating] = useState(false);
+    const [videoId, setVideoId] = useState('');
 
     const speak = (text) => {
         const utterance = new SpeechSynthesisUtterance(text);
@@ -29,16 +40,70 @@ function Chat_page() {
         window.speechSynthesis.speak(utterance);
     };
 
+    const genVideo = (text) => {
+        if (!generating) {
+            fetch(synclabsApiUrl + "/animate", {
+                method: 'POST',
+                headers: {
+                    "accept": "application/json",
+                    "x-api-key": synclabsApiKey,
+                    "Content-Type": "application/json"
+                },
+                body: {
+                    "videoUrl": defaultVideoUrl,
+                    "voiceId": defaultVoiceId,
+                    "transcript": text,
+                    "maxCredits": 100,
+                    "model": "sync-1.6.0,"
+                  },
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status == 'COMPLETED') {
+                    setVideoUrl(res.videoUrl)
+                } else {
+                    setGenerating(true);
+                    setVideoId(res.id);
+                    checkVideoProgress(res.id);
+                }
+            })
+        }
+    };
+
+    const checkVideoProgress = (videoId) => {
+        fetch(synclabsApiUrl + `/animate/${videoId}`, {
+            method: 'GET',
+            headers: {
+                "accept": "application/json",
+                "x-api-key": synclabsApiKey,
+                "Content-Type": "application/json"
+            },
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status == 'COMPLETED') {
+                if (res.status == 'COMPLETED') {
+                    setVideoUrl(res.videoUrl)
+                    setGenerating(false);
+                } else {
+                    setVideoId(res.id);
+                    checkVideoProgress(res.id);
+                }
+            }
+        })
+    };
+
     useEffect(() => {
         console.log("use effect called");
         fetch(apiUrl + "/chat/get-init-message", {
             method: 'GET'
         })
-            .then(res => res.text())
-            .then(text => {
-                setMessages([...messages, { author: 'HR', message: text }])
-                speak(text);
-            });
+        .then(res => res.text())
+        .then(text => {
+            setMessages([...messages, { author: 'HR', message: text }])
+            // speak(text);
+            genVideo(text);
+        });
     }, []);
 
     useEffect(() => {
@@ -73,7 +138,8 @@ function Chat_page() {
                 .then(res => res.text())
                 .then(text => {
                     setMessages([...messages, userMsg, { author: 'HR', message: text }]);
-                    speak(text); // Speak the response
+                    // speak(text); // Speak the response
+                    genVideo(text);
                 });
 
             setUserInput('');
@@ -106,7 +172,10 @@ function Chat_page() {
     return (
         <div className="MAIN" style={{marginLeft:'20%',marginRight:'20%'}}>
             <div className="img-position">
-                <AvatarDisplay isTalking={isSpeaking} className="avatar" />
+                {/* <AvatarDisplay isTalking={isSpeaking} className="avatar" /> */}
+                <video width="320" height="100%" autoPlay>
+                    <source src={videoUrl} type='video/mp4' />
+                </video>
             </div>
             <div>
                 <button className="toggle-btn" onClick={toggleDarkMode}>
