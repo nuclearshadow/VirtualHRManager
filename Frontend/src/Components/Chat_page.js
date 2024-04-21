@@ -116,7 +116,7 @@ function Chat_page() {
                         </div>
                     </div>
                     <form className="chat-form" id="chat-form" onSubmit={handleSubmit}>
-                        <CSVLink data={messages} filename='HR_Interview' className='button'><DownloadIcon /> CSV</CSVLink>
+                        <CSVLink data={messages} filename='HR_Interview' className='chat-button'><DownloadIcon /> CSV</CSVLink>
                         <textarea
                             id="user-input"
                             value={userInput}
@@ -132,11 +132,11 @@ function Chat_page() {
                                 opacity: isSpeaking ? 0.5 : 1 // Reduce opacity when speaking
                             }}
                         />
-                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking} style={{ background: listening ? 'red' : 'rgb(92 165 223)', border: 'none', cursor: 'pointer', marginRight: '5px', borderRadius: '9999px', pointerEvents: isSpeaking ? 'none' : 'auto', aspectRatio: '1 / 1' }}
-                        className='button'>
+                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking} style={{ background: listening ? 'red' : 'rgb(92 165 223)', border: 'none', cursor: 'pointer', borderRadius: '9999px', pointerEvents: isSpeaking ? 'none' : 'auto', aspectRatio: '1 / 1' }}
+                        className='chat-button'>
                             <MicIcon style={{ fontSize: '24px' }} />
                         </button>}
-                        <input type="submit" value="Send" className='button' />
+                        <input type="submit" value="Send" className='chat-button' />
                     </form>
                 </div>
             </div>

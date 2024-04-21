@@ -151,7 +151,7 @@ body {
     max-width: 70%;
 }
 
-.button {
+.chat-button {
     padding: 5px;
     background-color: #45a049;
     display: flex;
@@ -159,4 +159,5 @@ body {
     justify-content: center;
     color: white;
     border-radius: 10px;
+    height: 40px;
 }
