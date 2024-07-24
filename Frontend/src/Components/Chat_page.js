@@ -8,10 +8,6 @@ import { CSVLink } from 'react-csv';
 
 const apiUrl = 'http://localhost:5000';
 
-function test() {
-    
-}
-
 function Chat_page() {
     const [userInput, setUserInput] = useState('');
     const [messages, setMessages] = useState([]);
