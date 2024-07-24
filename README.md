@@ -1,7 +1,5 @@
 # Virtual HR Manager
 
-Created for HackNUthon 5.0 offline hackathon hosted at Nirma University
-
 # Run locally
 
 ## Dependencies
