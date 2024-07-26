@@ -14,6 +14,9 @@ function Chat_page() {
     const [isListening, setIsListening] = useState(false); // State to track microphone status
     const [isSpeaking, setIsSpeaking] = useState(false); // State to track text-to-speech status
     const [micColor, setMicColor] = useState('rgb(92 165 223)'); // State to track microphone icon color
+
+    const [autoMic, setAutoMic] = useState(false);
+
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition(); // Initialize SpeechRecognition hook
 
     const speak = (text) => {
@@ -24,7 +27,7 @@ function Chat_page() {
         utterance.onend = () => {
             setIsSpeaking(false); // Set isSpeaking to false when speech ends
             document.getElementById('user-input').disabled = false; // Enable textarea after speech ends
-            setTimeout(() => SpeechRecognition.startListening(), 500);
+            setTimeout(() => autoMic && SpeechRecognition.startListening(), 500);
         };
         window.speechSynthesis.speak(utterance);
     };
@@ -88,10 +91,12 @@ function Chat_page() {
 
     const handleMicIconClick = () => {
         if (listening) {
+            setAutoMic(false);
             setMicColor('rgb(92 165 223)');
             SpeechRecognition.stopListening();
             // Automatically submit the message when the microphone stops listening
         } else {
+            setAutoMic(true);
             setMicColor('red');
             setTimeout(() => { // Delay microphone activation by 2 seconds
                 SpeechRecognition.startListening();

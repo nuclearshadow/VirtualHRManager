@@ -30,5 +30,8 @@ def chat_get_init_message():
 @app.route("/chat/send-message", methods=['POST'])
 def chat_send_message():
     message = request.form['message']
-    message += " *Give a short response to the answer in a few words and ask the next interview question"
+    if len(chat.history) < 5:
+        message += " *Give a short feedback to the answer in a few words and then ask the next interview question"
+    else:
+        message += " *if the previous question was a technical question then check if the given answer is correct and ask the next technical question"
     return chat.send_message(message).text
