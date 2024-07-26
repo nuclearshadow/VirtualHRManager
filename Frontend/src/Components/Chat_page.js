@@ -16,6 +16,7 @@ function Chat_page() {
     const [micColor, setMicColor] = useState('rgb(92 165 223)'); // State to track microphone icon color
 
     const [autoMic, setAutoMic] = useState(false);
+    const [ended, setEnded] = useState(false);
 
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition(); // Initialize SpeechRecognition hook
 
@@ -26,8 +27,10 @@ function Chat_page() {
         };
         utterance.onend = () => {
             setIsSpeaking(false); // Set isSpeaking to false when speech ends
-            document.getElementById('user-input').disabled = false; // Enable textarea after speech ends
-            setTimeout(() => autoMic && SpeechRecognition.startListening(), 500);
+            // document.getElementById('user-input').disabled = false; // Enable textarea after speech ends
+            if (!ended) {
+                setTimeout(() => autoMic && SpeechRecognition.startListening(), 500);
+            }
         };
         window.speechSynthesis.speak(utterance);
     };
@@ -73,10 +76,13 @@ function Chat_page() {
                 method: 'POST',
                 body: data,
             })
-                .then(res => res.text())
-                .then(text => {
-                    setMessages([...messages, userMsg, { author: 'HR', message: text }]);
-                    speak(text); // Speak the response
+                .then(res => res.json())
+                .then(res => {
+                    setMessages([...messages, userMsg, { author: 'HR', message: res.message }]);
+                    speak(res.message); // Speak the response
+                    if (res.ended) {
+                        setEnded(true);
+                    }
                 });
 
             setUserInput('');
@@ -131,7 +137,7 @@ function Chat_page() {
                     <div className="chat-messages" id="chat-messages">
                         <div ref={msgRef}>
                             {messages.map((msg, index) => <div key={index} className='message-container'>
-                                <div className={msg.author == 'HR' ? "message bot-message" : "request message-style"}>{msg.message}</div>
+                                <div className={msg.author === 'HR' ? "message bot-message" : "request message-style"}>{msg.message}</div>
                             </div>)}
                         </div>
                     </div>
@@ -143,6 +149,7 @@ function Chat_page() {
                             onChange={handleTextareaChange}
                             onKeyDown={handleTextareaKeyDown}
                             placeholder="Type your message..."
+                            disabled={isSpeaking || ended}
                             style={{
                                 borderRadius: '10px',
                                 padding: '10px',
@@ -152,11 +159,11 @@ function Chat_page() {
                                 opacity: isSpeaking ? 0.5 : 1 // Reduce opacity when speaking
                             }}
                         />
-                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking} style={{ background: listening ? 'red' : 'rgb(92 165 223)', border: 'none', cursor: 'pointer', borderRadius: '9999px', pointerEvents: isSpeaking ? 'none' : 'auto', aspectRatio: '1 / 1' }}
+                        {browserSupportsSpeechRecognition && <button type="button" onClick={handleMicIconClick} disabled={isSpeaking || ended} style={{ background: listening ? 'red' : 'rgb(92 165 223)', border: 'none', cursor: 'pointer', borderRadius: '9999px', pointerEvents: isSpeaking ? 'none' : 'auto', aspectRatio: '1 / 1' }}
                         className='chat-button'>
                             <MicIcon style={{ fontSize: '24px' }} />
                         </button>}
-                        <input type="submit" value="Send" className='chat-button' />
+                        <input type="submit" value="Send" disabled={isSpeaking || ended} className='chat-button' />
                     </form>
                 </div>
             </div>
