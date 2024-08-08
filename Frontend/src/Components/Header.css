@@ -31,3 +31,16 @@
     display: inline-block;
     margin: 1.4em 1em 1em 1em;
   }
+
+
+.signup-button {
+  background-color: #000; /* Example background color */
+  color: #fff; /* Example text color */
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.signup-button:hover {
+  background-color: #333; /* Example hover effect */
+}

@@ -1,12 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
 import '../Components/Register.css'
+import { signup } from '../Firebase/Authentication/Signup';
 export default function Register() {
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
 
-        // Validation logic
+        // Validation logiczzzz
         const firstName = event.target.first_name.value.trim();
         const lastName = event.target.last_name.value.trim();
         const email = event.target.email.value.trim();
@@ -22,6 +23,9 @@ export default function Register() {
             alert("Passwords do not match");
             return;
         }
+
+        await signup(email,password)
+
         alert("Form submitted successfully!");
     };
 
