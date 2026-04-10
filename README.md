@@ -1,5 +1,7 @@
 # Virtual HR Manager
 
+![screenshot](images/screenshot.png)
+
 # Run locally
 
 ## Dependencies

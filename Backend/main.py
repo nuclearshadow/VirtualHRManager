@@ -11,7 +11,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('models/gemini-2.5-flash')
 
 chat = model.start_chat(history=[])
 
@@ -35,3 +35,7 @@ def chat_send_message():
     else:
         message += " *if the previous question was a technical question then check if the given answer is correct and ask the next technical question"
     return chat.send_message(message).text
+
+
+if __name__ == "__main__":
+    print([model.name for model in genai.list_models()])
